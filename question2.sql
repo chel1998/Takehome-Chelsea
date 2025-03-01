@@ -1,0 +1,11 @@
+SELECT TOP 5 p.BRAND, SUM(t.FINAL_SALE) as sales
+FROM Users as u
+JOIN Transactions as t 
+	ON u.ID = t.USER_ID
+JOIN Products as p
+	ON p.BARCODE = t.BARCODE
+WHERE 
+    DATEDIFF(MONTH, u.CREATED_DATE, GETDATE()) >= 6
+	AND t.PURCHASE_DATE <= GETDATE()
+GROUP BY p.BRAND
+ORDER BY sales DESC;
